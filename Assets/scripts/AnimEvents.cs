@@ -16,5 +16,7 @@ public class AnimEvents : MonoBehaviour
     {
         //animP.SetBool("doElec", false);
         playerSprite.SetActive(false);
+        
     }
+    
 }
