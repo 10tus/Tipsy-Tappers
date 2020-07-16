@@ -12,7 +12,6 @@ public class GlassAction : MonoBehaviour
 
     #region SingletonInstance
     public static GlassAction instance;
-    public static GlassAction instance2; // is this git thing working???
 
     private void Awake() 
     {
