@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class GlassAction : MonoBehaviour
 {
+    //hello?
     List<int> shotGlassValue;
     public GameObject[] model;
     public Sprite[] col;
