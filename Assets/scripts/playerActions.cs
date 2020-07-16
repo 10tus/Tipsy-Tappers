@@ -6,9 +6,6 @@ public class playerActions : MonoBehaviour
 {
 
     private int ctr = 0,forbidVal = 1;
-    private Timer timer;
-    private GameManagerScript gameManager;
-    private ScoresHandler scoresHandler;
     [SerializeField]
     private Slider drunkBar;
 
@@ -17,45 +14,44 @@ public class playerActions : MonoBehaviour
     public Animator manAnim,dionAnim;
     public GameObject cover;
 
-    #region SingletonInstance
-    public static playerActions instance;
+    GameManagerScript gameManager;
+    ScoresHandler scoresHandler;
+    Timer timer;
+    GlassAction glassAction;
 
-    private void Awake() 
+    void Awake() 
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }    
-    }
-    #endregion
+        gameManager = GetComponent<GameManagerScript>();
+        scoresHandler = GetComponent<ScoresHandler>();
+        timer = GetComponent<Timer>();
 
-    private void Start() 
-    {
-        gameManager = GameManagerScript.instance;
-        scoresHandler = ScoresHandler.instance;
-        timer = Timer.instance;
+        glassAction = GetComponent<GlassAction>();
     }
 
-    private void Drink(int drinkVal)
+    void Drink()
     {
-
-        if(drinkVal != forbidVal)
+        if(glassAction.glassesQueue.Peek().Drink())
         {
+            glassAction.ReplaceGlass();
             timer.AddTime();
             scoresHandler.UpdateScore();
             ctr++;
             UpdateValue();
-            
-
         }
         else       
             playDeadAnim(1);
+    }
 
+    void Throw()
+    {
+        if(glassAction.glassesQueue.Peek().Throw())
+        {
+            glassAction.ReplaceGlass();
+            timer.AddTime();
+            scoresHandler.UpdateScore();
+        }
+        else
+            playDeadAnim(0);
     }
 
     public void Consequences(int val, int type)
