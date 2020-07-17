@@ -6,9 +6,11 @@ public class GameManagerScript : MonoBehaviour
     // Start is called before the first frame update
     Camera cam;
     public Gradient gradient;
-    private GameOverHandler menu;
+    private GameOverHandler overHandler;
     private bool over = false;
     private float duration = 5f;
+    private PlayerSystem playerSystem;
+
 
     #region SingletonInstance
     public static GameManagerScript instance;
@@ -29,11 +31,12 @@ public class GameManagerScript : MonoBehaviour
      #endregion
     void Start()
     {
+        playerSystem = PlayerSystem.instance;
         if(GameObject.FindGameObjectWithTag("MainCamera") != null)
         {
             cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         }
-        menu = GameOverHandler.instance;
+        overHandler = playerSystem._over;
 
 
     }
@@ -52,8 +55,13 @@ public class GameManagerScript : MonoBehaviour
     public void GameOver()
     {
         over = true;
-        menu.GameOverPanel();
+        overHandler.GameOverPanel();
 
+    }
+
+    public void ShowRevive()
+    {
+        overHandler.ShowRevivePanel();
     }
 
     private void ChangeColorBg()

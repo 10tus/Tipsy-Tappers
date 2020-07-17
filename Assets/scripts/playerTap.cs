@@ -1,24 +1,28 @@
 ﻿using UnityEngine;
 
-public class playerTap : TipsyUtils
+public class playerTap : MonoBehaviour
 {
-    // Update is called once per frame
-    //float tapStart, tapEnd,tapTime = 0.02f;
     private Timer timer;
     private GlassAction glass;
-    private GameOverHandler menu;
+    private GameOverHandler overHandler;
+    private PlayerSystem playerSystem;
     private bool flag;
     Animator armAnim;
 
-    private void Start() {
-        menu = GameOverHandler.instance;
+    private void Start() 
+    {
+        playerSystem = PlayerSystem.instance;
+        overHandler = playerSystem._over;
+        timer = playerSystem._timer;
+        glass = playerSystem._glass;
+
         if(GameObject.FindGameObjectWithTag("arm") != null)
         {
             armAnim = GameObject.FindGameObjectWithTag("arm").GetComponent<Animator>();
         }
-        glass = GlassAction.instance;
-        timer = Timer.instance;
+        //glass = GlassAction.instance;
         
+
     }
 
     void Update()
@@ -56,21 +60,23 @@ public class playerTap : TipsyUtils
 
         if(posX > 0 && posY < -1.5f)
         {
-            menu.instruction.SetActive(false);
+            overHandler.instruction.SetActive(false);
             glass.RemoveGlass(0);
-            StartCoroutine(ToggleAnim(armAnim,"Drink",true,0.01f));
+            StartCoroutine(playerSystem.ToggleAnim(armAnim,"Drink",true,0.01f));
             flag = true;          
         }
         //player taps at left side
         else if (posX<0 && posY < -1.5f)
         {
-            menu.instruction.SetActive(false);
+            overHandler.instruction.SetActive(false);
             glass.RemoveGlass(1);
-            StartCoroutine(ToggleAnim(armAnim,"Throw",true,0.01f));
+            StartCoroutine(playerSystem.ToggleAnim(armAnim,"Throw",true,0.01f));
             flag = true;
             
         }
 
     }
+
+   
 
 }

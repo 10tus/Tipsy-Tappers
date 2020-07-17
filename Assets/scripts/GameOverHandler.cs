@@ -4,34 +4,28 @@ using UnityEngine.SceneManagement;
 
 public class GameOverHandler : MonoBehaviour
 {
-    public GameObject overPanel,score,timer,glassArray,DrunkMeter,instruction;
-
-    #region SingletonInstance
-    public static GameOverHandler instance;
-
-    private void Awake() 
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }    
-    }
-    #endregion
+    public GameObject overPanel,score,timer,glassArray,DrunkMeter,instruction,revivePanel;
 
     public void GameOverPanel()
     {
-        
+        revivePanel.SetActive(false);
         overPanel.SetActive(true);
         score.SetActive(false);
-        timer.SetActive(false);
+        
+        
+    }
+
+    public void ShowRevivePanel()
+    {
+        revivePanel.SetActive(true);
         DrunkMeter.SetActive(false);
-        
-        
+        timer.SetActive(false);
+
+    }
+
+    public void ReviveAccepted()
+    {
+        //Play Ad or pay 30 tipsy coins
     }
     public void HideGameOverPanel()
     {

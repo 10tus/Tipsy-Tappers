@@ -3,33 +3,20 @@ using UnityEngine;
 
 public class GlassAction : MonoBehaviour
 {
-    List<int> shotGlassValue;
+   
+    private List<int> shotGlassValue;
+    
     public GameObject[] model;
     public Sprite[] col;
+    private PlayerSystem playerSystem;
     private List<GameObject> poisonContainer;
     private List<Vector2> coordinates;
     private playerActions actions;
 
-    #region SingletonInstance
-    public static GlassAction instance;
-
-    private void Awake() 
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }    
-    }
-    #endregion
-
     void Start()
     {
-        actions = playerActions.instance;
+        playerSystem = PlayerSystem.instance;
+        actions = playerSystem._player;
         shotGlassValue = new List<int>();
         coordinates = new List<Vector2>();
         poisonContainer = new List<GameObject>();
@@ -37,11 +24,10 @@ public class GlassAction : MonoBehaviour
         {
             shotGlassValue.Add(Randomizer());
             UpdateGlass();
-            // shotGlass.Add(RandomizeImage)
-            //shotGlass.Add();
+
         }
     }
-    //remove dis shit
+
     int Randomizer()
     {       
         return Random.Range(0, 5);
@@ -66,8 +52,12 @@ public class GlassAction : MonoBehaviour
         poisonContainer.Clear();
         coordinates.Clear();
 
+        //remove glass at hand of player
         shotGlassValue.RemoveAt(0);
+        //add another glass means create new randomized value from 0-5 then add it from list of shotglass values
         AddGlass();
+
+        //change all sprites of all shotglass model (I referenced it from model[])
         UpdateGlass();
 
     }
@@ -76,6 +66,7 @@ public class GlassAction : MonoBehaviour
     {
         for (int i = 0; i < shotGlassValue.Count; i++)
         {
+            //for every shot glass model replace the sprites with sprites coming from col[] that uses index from shotglassvalue
             model[i].GetComponent<SpriteRenderer>().sprite = col[shotGlassValue[i]];
 
             //if poison shot is at play area show poison animation thru gameobject

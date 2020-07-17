@@ -1,29 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ScoresHandler : MonoBehaviour
 {
     public GameObject hi, score,panelScore;
     public int currScore {get;private set;}
 
-     public static ScoresHandler instance;
-
-    #region SingletonInstance
-     private void Awake() 
-     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-     }
-     #endregion
-
+    
     // Start is called before the first frame update
     void Start()
     {

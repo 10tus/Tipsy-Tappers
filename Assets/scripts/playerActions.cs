@@ -11,34 +11,20 @@ public class playerActions : MonoBehaviour
     private ScoresHandler scoresHandler;
     [SerializeField]
     private Slider drunkBar;
+    private PlayerSystem playerSystem;
 
     [SerializeField] //SerializeField to make it visible in inspector in unity but not accessible by other class
     private int DrunkLimit;
     public Animator manAnim,dionAnim;
     public GameObject cover;
 
-    #region SingletonInstance
-    public static playerActions instance;
-
-    private void Awake() 
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }    
-    }
-    #endregion
 
     private void Start() 
     {
+        playerSystem = PlayerSystem.instance;
         gameManager = GameManagerScript.instance;
-        scoresHandler = ScoresHandler.instance;
-        timer = Timer.instance;
+        scoresHandler = playerSystem._scoresHandler;
+        timer = playerSystem._timer;
     }
 
     private void Drink(int drinkVal)
@@ -128,6 +114,6 @@ public class playerActions : MonoBehaviour
         name.SetBool(param,val);
         yield return new WaitForSeconds(2.5f);
         name.SetBool(param,!val);
-        gameManager.GameOver();
+        gameManager.ShowRevive();
     }
 }
