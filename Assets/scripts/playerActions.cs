@@ -11,7 +11,7 @@ public class PlayerActions : MonoBehaviour
     Timer timer;
     GlassAction glassAction;
 
-    void Awake() 
+    void Start() 
     {
         gameManager = GetComponent<GameManagerScript>();
         scoresHandler = GetComponent<ScoresHandler>();
