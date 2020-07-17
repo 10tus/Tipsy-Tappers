@@ -1,19 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class playerActions : MonoBehaviour
+public class PlayerActions : MonoBehaviour
 {
+    public Animator manAnim, dionAnim;
 
-    private int ctr = 0,forbidVal = 1;
-    [SerializeField]
-    private Slider drunkBar;
-
-    [SerializeField] //SerializeField to make it visible in inspector in unity but not accessible by other class
-    private int DrunkLimit;
-    public Animator manAnim,dionAnim;
-    public GameObject cover;
-
+    DrunkHandler drunkHandler;
     GameManagerScript gameManager;
     ScoresHandler scoresHandler;
     Timer timer;
@@ -26,23 +18,24 @@ public class playerActions : MonoBehaviour
         timer = GetComponent<Timer>();
 
         glassAction = GetComponent<GlassAction>();
+        drunkHandler = GetComponent<DrunkHandler>();
     }
 
-    void Drink()
+    public void Drink()
     {
         if(glassAction.glassesQueue.Peek().Drink())
         {
             glassAction.ReplaceGlass();
             timer.AddTime();
+            timer.rateOfDecreaseChange(scoresHandler.currScore);
             scoresHandler.UpdateScore();
-            ctr++;
-            UpdateValue();
+            drunkHandler.IncrementDrunkLevel();
         }
         else       
             playDeadAnim(1);
     }
 
-    void Throw()
+    public void Throw()
     {
         if(glassAction.glassesQueue.Peek().Throw())
         {
@@ -54,71 +47,20 @@ public class playerActions : MonoBehaviour
             playDeadAnim(0);
     }
 
-    public void Consequences(int val, int type)
-    {
-        
-        if(type == 0)
-        {
-            Drink(val);
-            timer.rateOfDecreaseChange(scoresHandler.currScore);
-
-        }
-        else if(type == 1)
-            Throw(val);
-    }
-
-    private void Throw(int throwVal)
-    {
-        if(throwVal == forbidVal)
-        {
-            timer.AddTime();
-            scoresHandler.UpdateScore();
-        }
-        else
-            playDeadAnim(0);
-    }
-
-    private void UpdateValue()
-    {
-
-        drunkBar.value = ctr;
-        if(ctr == DrunkLimit)
-            StartCoroutine(Drunk());
-
-
-    }
-
-    
-
-    IEnumerator Drunk()
-    {
-        Animator clouds = cover.GetComponent<Animator>();
-
-        manAnim.SetBool("Drunk", true);
-        clouds.SetBool("doCover", true);
-        yield return new WaitForSeconds(3f);
-        ctr = 0;
-        manAnim.SetBool("Drunk", false);
-        clouds.SetBool("doCover", false);
-
-    }
     void playDeadAnim(int type)
     {
         GameObject.FindGameObjectWithTag("Player").GetComponent<playerTap>().enabled = false;
         if(type == 1) //death by flying
         {
             StartCoroutine(SetAnim(manAnim,"dead", true));
-            
         }
         else //death by electrocution
         {
-            
             StartCoroutine(SetAnim(dionAnim,"dionShow",true));
         }
-        
         //manAnim.SetBool("dead", false);
-
     }
+
     IEnumerator SetAnim(Animator name,string param,bool val)
     {
         name.SetBool(param,val);

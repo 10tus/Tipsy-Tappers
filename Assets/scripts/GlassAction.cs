@@ -22,7 +22,7 @@ public class GlassAction : MonoBehaviour
 
     public void ReplaceGlass()
     {
-        Destroy(glassesQueue.Dequeue());
+        glassesQueue.Dequeue();
         AddGlass();
     }
     

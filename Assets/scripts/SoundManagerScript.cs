@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SoundManagerScript : MonoBehaviour
 {
-    public Audio[] audio;
+    public new Audio[] audio;
 
     public static SoundManagerScript instance;
 
