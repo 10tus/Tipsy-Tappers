@@ -23,8 +23,15 @@ public class GameOverHandler : MonoBehaviour
 
     }
 
+
+    //To be Reworked
     public void ReviveAccepted()
     {
+        Debug.Log("bitch");
+        revivePanel.SetActive(false);
+        DrunkMeter.SetActive(false);
+        timer.SetActive(false);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<playerTap>().enabled = true;
         //Play Ad or pay 30 tipsy coins
     }
     public void HideGameOverPanel()
