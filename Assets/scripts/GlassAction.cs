@@ -60,7 +60,12 @@ public class GlassAction : MonoBehaviour
 
         foreach ((Glass glass, int i) in glassesQueue.Select((value, i) => (value, i)))
         {
-            glassObjects[i].GetComponent<SpriteRenderer>().sprite = _drinks[glass.glassValue % _drinks.Length];
+            glassObjects[i].GetComponent<SpriteRenderer>().sprite
+                = glass.glassValue != 0 //Poison drinks have 0 glassValue
+                    ? glass.glassValue % _drinks.Length != 0
+                        ? _drinks[glass.glassValue % _drinks.Length] //Prevent array out of bounds using modulo with glassValue
+                        : _drinks[(glass.glassValue + 1) % _drinks.Length] //Prevent regular drinks from having poison drink sprite (e.g. 4 % 4 = 0)
+                    : _drinks[0]; //Poison drink sprite located at [0] index
 
             if(glass.glassValue == 0){
                 GameObject _poison;

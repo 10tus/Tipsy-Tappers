@@ -439,6 +439,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: dae104839d053154c900e84436c258e2,
         type: 3}
+    - target: {fileID: 6589263526968548894, guid: b03e8434c4b81cf44870ab383858bc59,
+        type: 3}
+      propertyPath: poisonCloud
+      value: 
+      objectReference: {fileID: 7692081957063937243, guid: 7cac8622eb9d1b74e8c11b04faf20181,
+        type: 3}
     - target: {fileID: 6589263526968548895, guid: b03e8434c4b81cf44870ab383858bc59,
         type: 3}
       propertyPath: m_LocalPosition.x
