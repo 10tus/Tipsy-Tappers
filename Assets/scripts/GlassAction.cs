@@ -12,7 +12,8 @@ public class GlassAction : MonoBehaviour
     public Sprite[] _regularDrinks;
 
     public GameObject[] glassObjects;
-    public Queue<Glass> glassesQueue;
+    Queue<Glass> glassesQueue;
+    public Glass currentGlass => glassesQueue.Peek();
 
     public GameObject poisonCloud;
     ConcurrentQueue<GameObject> poisonPool;
@@ -97,6 +98,8 @@ public class GlassAction : MonoBehaviour
         //populate active poisons with updated poison queue
         activePoisons = new ConcurrentQueue<GameObject>(_poisonQueue);
     }
+
+    
 }
 
 public static class Helper{
@@ -116,15 +119,16 @@ public static class Helper{
         poison.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
     }
 
-    internal static void DebugGlass(){
-        string debug = "";
-        foreach((Glass glass, int i) in context.glassesQueue.Select((value, i) => (value, i))){
-            debug += $"[{i}]{glass}-{glass.glassValue} ";
-        }
-        Debug.Log(debug);
-    }
+    // Add internal modifier to glassesQueue, poisonPool, and/or activePoisons if you want to use this method
+    // internal static void DebugGlass(){
+    //     string debug = "";
+    //     foreach((Glass glass, int i) in context.glassesQueue.Select((value, i) => (value, i))){
+    //         debug += $"[{i}]{glass}-{glass.glassValue} ";
+    //     }
+    //     Debug.Log(debug);
+    // }
 
-    // Add internal modifier to poisonPool and activePoisons if you want to use this method
+    
     // internal static void DebugPoisonInstances(){
     //     Debug.Log($"Poison pool count: {context.poisonPool.Count}");
     //     Debug.Log($"Active poison count: {context.activePoisons.Count}");

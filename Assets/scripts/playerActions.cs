@@ -27,7 +27,7 @@ public class PlayerActions : MonoBehaviour
 
     public void Drink()
     {
-        if(glassAction.glassesQueue.Peek().Drink())
+        if(glassAction.currentGlass.Drink())
         {
             glassAction.ReplaceGlass();
             timer.AddTime();
@@ -41,7 +41,7 @@ public class PlayerActions : MonoBehaviour
 
     public void Throw()
     {
-        if(glassAction.glassesQueue.Peek().Throw())
+        if(glassAction.currentGlass.Throw())
         {
             glassAction.ReplaceGlass();
             timer.AddTime();
