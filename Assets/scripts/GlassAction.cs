@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Concurrent;
 using UnityEngine;
 using System.Linq;
 
@@ -12,8 +13,7 @@ public class GlassAction : MonoBehaviour
     public Queue<Glass> glassesQueue;
 
     public GameObject poisonCloud;
-    List<GameObject> poisonInstances;
-    List<Vector2> poisonCoordinates;
+    ConcurrentQueue<GameObject> poisonInstances;
 
     int _queueLimit = 5;
 
@@ -24,8 +24,7 @@ public class GlassAction : MonoBehaviour
 
     void Start(){
         glassesQueue = new Queue<Glass>();
-        poisonInstances = new List<GameObject>();
-        poisonCoordinates = new List<Vector2>();
+        poisonInstances = new ConcurrentQueue<GameObject>();
 
         while(glassesQueue.Count < _queueLimit){
             AddGlass();
@@ -42,22 +41,12 @@ public class GlassAction : MonoBehaviour
 
     public void ReplaceGlass()
     {
-        glassesQueue.Dequeue();
-
-        //Destroy all poison gameobject instances in play area
-        if(poisonInstances.Count != 0)
-        {
-            foreach (GameObject p in poisonInstances)
-            {
-                Destroy(p);   
-            }
-            
-
-        }
-
-        //clear poisoncontainer and coordinates everytime player removes glass to reset play area
-        poisonInstances.Clear();
-        poisonCoordinates.Clear();
+        //if current glass is poison glass, remove and destroy firstmost poison instance from poison queue
+        if(glassesQueue.Dequeue().GetType() == typeof(PoisonGlass)){
+            GameObject _poison;
+            poisonInstances.TryDequeue(out _poison);
+            Destroy(_poison);
+        };
 
         AddGlass();
         UpdateGlass();
@@ -65,31 +54,34 @@ public class GlassAction : MonoBehaviour
     }
 
     void UpdateGlass(){
+
+        //temporary poison queue for updating
+        ConcurrentQueue<GameObject> _poisonQueue = new ConcurrentQueue<GameObject>();
+
         foreach ((Glass glass, int i) in glassesQueue.Select((value, i) => (value, i)))
         {
             glassObjects[i].GetComponent<SpriteRenderer>().sprite = _drinks[glass.glassValue % _drinks.Length];
 
             if(glass.glassValue == 0){
-                GameObject _poison = Instantiate(poisonCloud, glassObjects[i].transform.position + new Vector3(0.1f, 0.3f, 0), Quaternion.identity) as GameObject;
+                GameObject _poison;
 
-                //checks if there is already poison on play area to prevent multiple instantiation of poison gameobject
-                if(!poisonCoordinates.Contains(_poison.transform.position))
-                {
-                    //add position of instantiated gameobject to coordinates
-                    poisonCoordinates.Add(_poison.transform.position);
-                    //set poison gameobject to parent
-                    _poison.transform.SetParent(glassObjects[i].transform);
-                    //reset rotation of poison as it is the same as parent
-                    _poison.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
-                    //add poison to container
-                    poisonInstances.Add(_poison);
-                }
-                else
-                {
-                    Destroy(_poison);
-                }
+                //gets and remove the firstmost poison instance from original queue if it exists, else instantiate a new one
+                if(!poisonInstances.TryDequeue(out _poison))
+                    _poison = Instantiate(poisonCloud, glassObjects[i].transform.position + new Vector3(0.1f, 0.3f, 0), Quaternion.identity) as GameObject;
+
+                //set poison gameobject parent
+                _poison.transform.parent = glassObjects[i].transform;
+                //update poison gameobject position to match parent
+                _poison.transform.position = glassObjects[i].transform.position + new Vector3(0.1f, 0.3f, 0);
+                //reset rotation of poison as it is the same as parent
+                _poison.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+                //add poison to updated poison queue
+                _poisonQueue.Enqueue(_poison);
             }
         }
+
+        //populate the original poison instances queue with the updated poison queue
+        poisonInstances = new ConcurrentQueue<GameObject>(_poisonQueue);
     }
     
     void DebugGlass(){
