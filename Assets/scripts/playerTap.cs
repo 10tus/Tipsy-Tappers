@@ -10,14 +10,13 @@ public class playerTap : TipsyUtils
     GameOverHandler menu;
 
     void Start() {
-        menu = GetComponent<GameOverHandler>();
+        menu = ServiceLocator.Resolve<GameOverHandler>();
         if(GameObject.FindGameObjectWithTag("arm") != null)
         {
             armAnim = GameObject.FindGameObjectWithTag("arm").GetComponent<Animator>();
         }
-        player = GetComponent<PlayerActions>();
-        timer = GetComponent<Timer>();
-        
+        player = ServiceLocator.Resolve<PlayerActions>();
+        timer = ServiceLocator.Resolve<Timer>();
     }
 
     void Update()
@@ -45,31 +44,20 @@ public class playerTap : TipsyUtils
     private void DoAction(float posX,float posY)
     {
         //player taps at right side
-        Debug.Log("ha");
         if(posX > 0 && posY < -1.5f)
         {
-            Debug.Log("he");
-            // menu.instruction.SetActive(false);
-            Debug.Log("he");
+            menu.instruction.SetActive(false);
             player.Drink();
-            Debug.Log("he");
             StartCoroutine(ToggleAnim(armAnim,"Drink",true,0.01f));
-            Debug.Log("he");
             flag = true;    
-            Debug.Log("he");      
         }
         //player taps at left side
         else if (posX<0 && posY < -1.5f)
         {
-            Debug.Log("ho");
-            // menu.instruction.SetActive(false);
-            Debug.Log("ho");
+            menu.instruction.SetActive(false);
             player.Throw();
-            Debug.Log("ho");
             StartCoroutine(ToggleAnim(armAnim,"Throw",true,0.01f));
-            Debug.Log("ho");
             flag = true;
-            Debug.Log("ho");
         }
 
     }

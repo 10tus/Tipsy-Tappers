@@ -11,14 +11,18 @@ public class PlayerActions : MonoBehaviour
     Timer timer;
     GlassAction glassAction;
 
+    void Awake(){
+        ServiceLocator.Register<PlayerActions>(this);
+    }
+
     void Start() 
     {
-        gameManager = GetComponent<GameManagerScript>();
-        scoresHandler = GetComponent<ScoresHandler>();
-        timer = GetComponent<Timer>();
+        gameManager = ServiceLocator.Resolve<GameManagerScript>();
+        scoresHandler = ServiceLocator.Resolve<ScoresHandler>();
+        timer = ServiceLocator.Resolve<Timer>();
 
-        glassAction = GetComponent<GlassAction>();
-        drunkHandler = GetComponent<DrunkHandler>();
+        glassAction = ServiceLocator.Resolve<GlassAction>();
+        drunkHandler = ServiceLocator.Resolve<DrunkHandler>();
     }
 
     public void Drink()

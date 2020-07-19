@@ -12,14 +12,14 @@ public class DrunkHandler : MonoBehaviour
     [SerializeField]
     private Slider drunkBar;
     
-    void Awake()
-    {
-        if(drunkLevel == _drunkLimit)
-            StartCoroutine(Drunk());
+    void Awake(){
+        ServiceLocator.Register<DrunkHandler>(this);
     }
 
     public void IncrementDrunkLevel(){
         drunkBar.value = ++drunkLevel;
+        if(drunkLevel == _drunkLimit)
+            StartCoroutine(Drunk());
     }
 
     IEnumerator Drunk()

@@ -1,29 +1,32 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+
 
 public class GlassAction : MonoBehaviour
 {
-    static Sprite[] _drinks;
+    [SerializeField]
+    public Sprite[] _drinks;
 
     public GameObject[] glassObjects;
     public Queue<Glass> glassesQueue;
 
     int _queueLimit = 5;
 
-    void Start()
+    void Awake()
     {
-        _drinks = new Sprite[] { 
-            Resources.Load<Sprite>("deathdrink"),
-            Resources.Load<Sprite>("drink"), 
-            Resources.Load<Sprite>("drink2"), 
-            Resources.Load<Sprite>("drink3") 
-        };
+        ServiceLocator.Register<GlassAction>(this);
+    }
 
+    void Start(){
         glassesQueue = new Queue<Glass>();
 
         while(glassesQueue.Count < _queueLimit){
             AddGlass();
         }
+
+        UpdateGlass();
+        //DebugGlass();
     }
 
     void AddGlass()
@@ -36,14 +39,21 @@ public class GlassAction : MonoBehaviour
         glassesQueue.Dequeue();
         AddGlass();
         UpdateGlass();
+        //DebugGlass();
     }
 
     void UpdateGlass(){
-        Glass[] _glassesArray = glassesQueue.ToArray();
-        for (int i = 0; i < glassObjects.Length; i++)
+        foreach ((Glass glass, int i) in glassesQueue.Select((value, i) => (value, i)))
         {
-            glassObjects[i].GetComponent<SpriteRenderer>().sprite = _drinks[_glassesArray[i].glassValue % _glassesArray.Length];
+            glassObjects[i].GetComponent<SpriteRenderer>().sprite = _drinks[glass.glassValue % _drinks.Length];
         }
     }
     
+    void DebugGlass(){
+        string debug = "";
+        foreach((Glass glass, int i) in glassesQueue.Select((value, i) => (value, i))){
+            debug += $"[{i}]{glass}-{glass.glassValue} ";
+        }
+        Debug.Log(debug);
+    }
 }

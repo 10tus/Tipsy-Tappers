@@ -6,12 +6,19 @@ public class AnimEvents : MonoBehaviour
     public GameObject playerSprite;
     // Start is called before the first frame update
 
+    SoundManagerScript sound;
+
+    void Start(){
+        sound = ServiceLocator.Resolve<SoundManagerScript>();
+    }
+
     public void ShowElec()
     {
         animP = playerSprite.GetComponent<Animator>();
         animP.SetBool("doElec",true);
-        SoundManagerScript.instance.Play("Thunder");
+        sound.Play("Thunder");
     }
+
     public void EndElec()
     {
         //animP.SetBool("doElec", false);

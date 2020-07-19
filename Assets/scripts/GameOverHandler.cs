@@ -6,22 +6,9 @@ public class GameOverHandler : MonoBehaviour
 {
     public GameObject overPanel,score,timer,glassArray,DrunkMeter,instruction;
 
-    #region SingletonInstance
-    public static GameOverHandler instance;
-
-    private void Awake() 
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }    
+    void Awake(){
+        ServiceLocator.Register<GameOverHandler>(this);
     }
-    #endregion
 
     public void GameOverPanel()
     {
