@@ -15,8 +15,8 @@ public class GlassAction : MonoBehaviour
     public Queue<Glass> glassesQueue;
 
     public GameObject poisonCloud;
-    internal ConcurrentQueue<GameObject> poisonPool;
-    internal ConcurrentQueue<GameObject> activePoisons;
+    ConcurrentQueue<GameObject> poisonPool;
+    ConcurrentQueue<GameObject> activePoisons;
 
     int _queueLimit = 5;
 
@@ -102,6 +102,8 @@ public class GlassAction : MonoBehaviour
 public static class Helper{
     static GlassAction context = ServiceLocator.Resolve<GlassAction>();
 
+    
+    
     internal static void FixPosition(this GameObject poison, GameObject parent = null){
         //If parent is null, set parent to last glassObject element offscreen to hide poison
         if(parent is null){
@@ -124,9 +126,10 @@ public static class Helper{
         Debug.Log(debug);
     }
 
-    internal static void DebugPoisonInstances(){
-        Debug.Log($"Poison pool count: {context.poisonPool.Count}");
-        Debug.Log($"Active poison count: {context.activePoisons.Count}");
-        Debug.Log($"Total poison instances count: {context.poisonPool.Count + context.activePoisons.Count}");
-    }
+    // Add internal modifier to poisonPool and activePoisons if you want to use this method
+    // internal static void DebugPoisonInstances(){
+    //     Debug.Log($"Poison pool count: {context.poisonPool.Count}");
+    //     Debug.Log($"Active poison count: {context.activePoisons.Count}");
+    //     Debug.Log($"Total poison instances count: {context.poisonPool.Count + context.activePoisons.Count}");
+    // }
 }
