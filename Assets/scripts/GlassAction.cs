@@ -102,7 +102,7 @@ public class GlassAction : MonoBehaviour
     
 }
 
-public static class Helper{
+internal static class Helper{
     static GlassAction context = ServiceLocator.Resolve<GlassAction>();
 
     internal static void FixPosition(this GameObject poison, GameObject parent = null){
