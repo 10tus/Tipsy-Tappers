@@ -68,7 +68,7 @@ public class PlayerActions : MonoBehaviour
     IEnumerator SetAnim(Animator name,string param,bool val)
     {
         name.SetBool(param,val);
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(1f);
         name.SetBool(param,!val);
         gameManager.GameOver();
     }

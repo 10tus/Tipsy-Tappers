@@ -12,26 +12,24 @@ public class GameOverHandler : MonoBehaviour
 
     public void GameOverPanel()
     {
-        
         overPanel.SetActive(true);
         score.SetActive(false);
         timer.SetActive(false);
         DrunkMeter.SetActive(false);
-        
-        
     }
+
     public void HideGameOverPanel()
     {
         overPanel.SetActive(false);
         score.SetActive(false);
         StartCoroutine(tapStart());
     }
+
     private IEnumerator tapStart()
     {
         glassArray.SetActive(false); 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.1f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         GameObject.FindGameObjectWithTag("Player").GetComponent<playerTap>().enabled = true;
-        
     }
 }
