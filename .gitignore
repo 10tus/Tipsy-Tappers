@@ -59,3 +59,9 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+#Misc
+Tipsy Tappers_Data/
+MonoBleedingEdge/
+Tipsy Tappers.exe
+UnityCrashHandler64.exe
+UnityPlayer.dll 
