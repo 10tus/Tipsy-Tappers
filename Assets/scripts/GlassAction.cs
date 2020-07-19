@@ -73,7 +73,7 @@ public class GlassAction : MonoBehaviour
                     ? _deathDrink //Set death drink sprite, poison drinks have 0 glassValue
                     : _regularDrinks[glass.glassValue % _regularDrinks.Length]; //Prevent array out-of-bounds using modulo with drinks length
 
-            if(glass.glassValue == 0){
+            if(glass.GetType() == typeof(PoisonGlass)){
                 GameObject _poison;
 
                 //try getting poison from active poison instances if it exists,
@@ -102,8 +102,6 @@ public class GlassAction : MonoBehaviour
 public static class Helper{
     static GlassAction context = ServiceLocator.Resolve<GlassAction>();
 
-    
-    
     internal static void FixPosition(this GameObject poison, GameObject parent = null){
         //If parent is null, set parent to last glassObject element offscreen to hide poison
         if(parent is null){
