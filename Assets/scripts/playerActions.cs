@@ -114,6 +114,15 @@ public class playerActions : MonoBehaviour
         name.SetBool(param,val);
         yield return new WaitForSeconds(2.5f);
         name.SetBool(param,!val);
-        gameManager.ShowRevive();
+
+        if(playerSystem._over.revivedOnce)
+            gameManager.GameOver();     
+        else
+            gameManager.ShowRevive(); 
+            
     }
+
+    
+
+    
 }

@@ -35,6 +35,7 @@ public class PlayerSystem : MonoBehaviour
         animator.SetBool(param,!val);
         
     }
+    
 
 }
 

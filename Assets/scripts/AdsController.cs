@@ -8,12 +8,14 @@ public abstract class Ads:MonoBehaviour,IUnityAdsListener
     protected bool testMode = true;
 
     public abstract void Reward();
+    public abstract void InitialSetup();
 
     void Start () {
         Advertisement.AddListener(this);
         Advertisement.Initialize(gameId, testMode);
     } 
     public void ShowRewardedVideo() {
+        InitialSetup();
         // Check if UnityAds ready before calling Show method:
         if (Advertisement.IsReady(rewardAd)) {
             Advertisement.Show(rewardAd);
@@ -59,11 +61,61 @@ public abstract class Ads:MonoBehaviour,IUnityAdsListener
 
 public class AdsController : Ads
 {
-    int i = 1;
+    //temporary instance
+    public static AdsController instance;
+
+     private void Awake() 
+     {
+         CheckGamesCount();
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else 
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
+
+    public void AddToGamesCtr()
+    {
+        PlayerPrefs.SetInt("gCtr", PlayerPrefs.GetInt("gCtr") + 1); //adds 1 to gCtr
+    }
+
+    private void CheckGamesCount()
+    {
+        if(!PlayerPrefs.HasKey("gCtr"))
+        {
+            PlayerPrefs.SetInt("gCtr", 0);
+        }
+    }
+    public void ShowAdsEveryFiveGames()
+    {
+        
+        AddToGamesCtr();
+        if(PlayerPrefs.GetInt("gCtr") == 5)
+        {
+            PlayerPrefs.SetInt("gCtr", 0);
+            ShowRewardedVideo();
+        }
+        
+
+    }
+    
     public override void Reward()
     {
-        i++;
-        Debug.Log("fcken hell");
+        Debug.Log("No reward");
+
+    }
+    public void BuyGameAccepted()
+    {
+        //PlayerPrefs.DeleteKey("Premium"); uncomment dis if u want to test
+        PlayerPrefs.SetInt("Premium",1);
+        Debug.Log("Player bought d game? :: " + PlayerPrefs.HasKey("Premium"));
+    }
+    public override void InitialSetup()
+    {
 
     }
     

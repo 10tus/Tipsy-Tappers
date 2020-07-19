@@ -9,7 +9,12 @@ public class GameManagerScript : MonoBehaviour
     private GameOverHandler overHandler;
     private bool over = false;
     private float duration = 5f;
+    [SerializeField]
+    private int ctr = 0;
     private PlayerSystem playerSystem;
+    private AdsController _ads;
+
+
 
 
     #region SingletonInstance
@@ -31,6 +36,7 @@ public class GameManagerScript : MonoBehaviour
      #endregion
     void Start()
     {
+        _ads = AdsController.instance;
         playerSystem = PlayerSystem.instance;
         if(GameObject.FindGameObjectWithTag("MainCamera") != null)
         {
@@ -40,6 +46,9 @@ public class GameManagerScript : MonoBehaviour
 
 
     }
+
+    
+
 
     // Update is called once per frame
     void Update()
@@ -54,8 +63,11 @@ public class GameManagerScript : MonoBehaviour
 
     public void GameOver()
     {
-        over = true;
+        
+        over = true; 
         overHandler.GameOverPanel();
+        //if games count is 2 play no reward ads
+        
 
     }
 

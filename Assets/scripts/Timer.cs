@@ -10,6 +10,7 @@ public class Timer : ReduceTimer
 
     [SerializeField]
     private int DivisibleBy;
+    private PlayerSystem playerSystem;
 
     private GameManagerScript gameManager;
     private float addTime = .1f;
@@ -18,6 +19,7 @@ public class Timer : ReduceTimer
 
     private void Start() {
         gameManager = GameManagerScript.instance;
+        playerSystem = PlayerSystem.instance;
     }
     public void StartTimer()
     {
@@ -47,9 +49,11 @@ public class Timer : ReduceTimer
 
     public override void TimerEnd()
     {
-        if(slider.value <= 0)
+        if(slider.value <= 0 && !playerSystem._over.revivedOnce)
         {
             gameManager.ShowRevive();
         }
+        else if(slider.value<=0 && playerSystem._over.revivedOnce)
+            gameManager.GameOver();
     }
 }
