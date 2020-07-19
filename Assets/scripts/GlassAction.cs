@@ -7,13 +7,16 @@ using System.Linq;
 public class GlassAction : MonoBehaviour
 {
     [SerializeField]
-    public Sprite[] _drinks;
+    public Sprite _deathDrink;
+    [SerializeField]
+    public Sprite[] _regularDrinks;
 
     public GameObject[] glassObjects;
     public Queue<Glass> glassesQueue;
 
     public GameObject poisonCloud;
-    ConcurrentQueue<GameObject> poisonInstances;
+    internal ConcurrentQueue<GameObject> poisonPool;
+    internal ConcurrentQueue<GameObject> activePoisons;
 
     int _queueLimit = 5;
 
@@ -24,14 +27,15 @@ public class GlassAction : MonoBehaviour
 
     void Start(){
         glassesQueue = new Queue<Glass>();
-        poisonInstances = new ConcurrentQueue<GameObject>();
+        poisonPool = new ConcurrentQueue<GameObject>();
+        activePoisons = new ConcurrentQueue<GameObject>();
 
         while(glassesQueue.Count < _queueLimit){
             AddGlass();
         }
 
         UpdateGlass();
-        //DebugGlass();
+        //Helper.DebugGlass();
     }
 
     void AddGlass()
@@ -41,59 +45,88 @@ public class GlassAction : MonoBehaviour
 
     public void ReplaceGlass()
     {
-        //if current glass is poison glass, remove and destroy firstmost poison instance from poison queue
+        //if current glass is poison glass, return current active poison instance to poison pool
         if(glassesQueue.Dequeue().GetType() == typeof(PoisonGlass)){
             GameObject _poison;
-            poisonInstances.TryDequeue(out _poison);
-            Destroy(_poison);
+            activePoisons.TryDequeue(out _poison);
+
+            //Hide poison offscreen and disable, then store to poison pool
+            _poison.FixPosition();
+            _poison.SetActive(false);
+            poisonPool.Enqueue(_poison);
         };
 
         AddGlass();
         UpdateGlass();
-        //DebugGlass();
+        // Helper.DebugGlass();
+        // Helper.DebugPoisonInstances();
     }
 
     void UpdateGlass(){
-
         //temporary poison queue for updating
         ConcurrentQueue<GameObject> _poisonQueue = new ConcurrentQueue<GameObject>();
 
         foreach ((Glass glass, int i) in glassesQueue.Select((value, i) => (value, i)))
         {
             glassObjects[i].GetComponent<SpriteRenderer>().sprite
-                = glass.glassValue != 0 //Poison drinks have 0 glassValue
-                    ? glass.glassValue % _drinks.Length != 0
-                        ? _drinks[glass.glassValue % _drinks.Length] //Prevent array out of bounds using modulo with glassValue
-                        : _drinks[(glass.glassValue + 1) % _drinks.Length] //Prevent regular drinks from having poison drink sprite (e.g. 4 % 4 = 0)
-                    : _drinks[0]; //Poison drink sprite located at [0] index
+                = (glass.glassValue == 0) 
+                    ? _deathDrink //Set death drink sprite, poison drinks have 0 glassValue
+                    : _regularDrinks[glass.glassValue % _regularDrinks.Length]; //Prevent array out-of-bounds using modulo with drinks length
 
             if(glass.glassValue == 0){
                 GameObject _poison;
 
-                //gets and remove the firstmost poison instance from original queue if it exists, else instantiate a new one
-                if(!poisonInstances.TryDequeue(out _poison))
+                //try getting poison from active poison instances if it exists,
+                //else if no active poison instances left, try getting from poison pool. 
+                //if fails, instantiate a new poison gameobject if all poison instances count < 5
+                if(activePoisons.TryDequeue(out _poison)) { }
+                else if (poisonPool.TryDequeue(out _poison)) { }
+                else if ((poisonPool.Count + activePoisons.Count) < 5)
                     _poison = Instantiate(poisonCloud, glassObjects[i].transform.position + new Vector3(0.1f, 0.3f, 0), Quaternion.identity) as GameObject;
 
+
+                //activate poison instance
+                _poison.SetActive(true);
                 //set poison gameobject parent
-                _poison.transform.parent = glassObjects[i].transform;
-                //update poison gameobject position to match parent
-                _poison.transform.position = glassObjects[i].transform.position + new Vector3(0.1f, 0.3f, 0);
-                //reset rotation of poison as it is the same as parent
-                _poison.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+                _poison.FixPosition(glassObjects[i]);
                 //add poison to updated poison queue
                 _poisonQueue.Enqueue(_poison);
             }
         }
 
-        //populate the original poison instances queue with the updated poison queue
-        poisonInstances = new ConcurrentQueue<GameObject>(_poisonQueue);
+        //populate active poisons with updated poison queue
+        activePoisons = new ConcurrentQueue<GameObject>(_poisonQueue);
     }
-    
-    void DebugGlass(){
+}
+
+public static class Helper{
+    static GlassAction context = ServiceLocator.Resolve<GlassAction>();
+
+    internal static void FixPosition(this GameObject poison, GameObject parent = null){
+        //If parent is null, set parent to last glassObject element offscreen to hide poison
+        if(parent is null){
+            parent = context.glassObjects.Last();
+        }
+
+        //Set poison Parent and Position
+        poison.transform.parent = parent.transform;
+        poison.transform.position = parent.transform.position + new Vector3(0.1f, 0.3f, 0);
+
+        //Set Rotation
+        poison.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+    }
+
+    internal static void DebugGlass(){
         string debug = "";
-        foreach((Glass glass, int i) in glassesQueue.Select((value, i) => (value, i))){
+        foreach((Glass glass, int i) in context.glassesQueue.Select((value, i) => (value, i))){
             debug += $"[{i}]{glass}-{glass.glassValue} ";
         }
         Debug.Log(debug);
+    }
+
+    internal static void DebugPoisonInstances(){
+        Debug.Log($"Poison pool count: {context.poisonPool.Count}");
+        Debug.Log($"Active poison count: {context.activePoisons.Count}");
+        Debug.Log($"Total poison instances count: {context.poisonPool.Count + context.activePoisons.Count}");
     }
 }
