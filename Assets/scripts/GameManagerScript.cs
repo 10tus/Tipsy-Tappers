@@ -10,30 +10,17 @@ public class GameManagerScript : MonoBehaviour
     private bool over = false;
     private float duration = 5f;
 
-    #region SingletonInstance
-    public static GameManagerScript instance;
+    void Awake(){
+        ServiceLocator.Register<GameManagerScript>(this);
+    }
 
-     private void Awake() 
-     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else 
-        {
-            Destroy(gameObject);
-            return;
-        }
-     }
-
-     #endregion
     void Start()
     {
         if(GameObject.FindGameObjectWithTag("MainCamera") != null)
         {
             cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         }
-        menu = GameOverHandler.instance;
+        menu = ServiceLocator.Resolve<GameOverHandler>();
 
 
     }

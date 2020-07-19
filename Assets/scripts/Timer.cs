@@ -3,42 +3,28 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
     [SerializeField]
-    private Slider slider;
+    Slider slider;
 
     [SerializeField]
-    private float rateAdd = 0.1f;
+    float rateAdd = 0.1f;
 
     [SerializeField]
-    private int DivisibleBy;
+    int DivisibleBy;
 
-    private GameManagerScript gameManager;
-    private float rateOfDecrease = 0.2f, addTime = .1f;
+    float rateOfDecrease = 0.2f, addTime= .1f;
 
-    #region SingletonInstance
-    public static Timer instance;
+    GameManagerScript gameManager;
 
-    private void Awake() 
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }    
+    void Awake() {
+        ServiceLocator.Register<Timer>(this);
     }
 
-    #endregion
-    // Update is called once per frame
-
-    private void Start() {
-        gameManager = GameManagerScript.instance;
+    void Start(){
+        gameManager = ServiceLocator.Resolve<GameManagerScript>();
     }
+
     public void StartTimer()
     {
-        
         slider.value -= rateOfDecrease*Time.deltaTime;
         TimerEnd();
     }
@@ -54,12 +40,9 @@ public class Timer : MonoBehaviour
         {
             if(score != 0 && score % DivisibleBy == 0)
             {
-                
                 rateOfDecrease += rateAdd;
             }
-            
         }
-
     }
 
     private void TimerEnd()

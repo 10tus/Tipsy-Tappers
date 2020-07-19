@@ -11,19 +11,23 @@ public class PlayerActions : MonoBehaviour
     Timer timer;
     GlassAction glassAction;
 
-    void Awake() 
-    {
-        gameManager = GetComponent<GameManagerScript>();
-        scoresHandler = GetComponent<ScoresHandler>();
-        timer = GetComponent<Timer>();
+    void Awake(){
+        ServiceLocator.Register<PlayerActions>(this);
+    }
 
-        glassAction = GetComponent<GlassAction>();
-        drunkHandler = GetComponent<DrunkHandler>();
+    void Start() 
+    {
+        gameManager = ServiceLocator.Resolve<GameManagerScript>();
+        scoresHandler = ServiceLocator.Resolve<ScoresHandler>();
+        timer = ServiceLocator.Resolve<Timer>();
+
+        glassAction = ServiceLocator.Resolve<GlassAction>();
+        drunkHandler = ServiceLocator.Resolve<DrunkHandler>();
     }
 
     public void Drink()
     {
-        if(glassAction.glassesQueue.Peek().Drink())
+        if(glassAction.currentGlass.Drink())
         {
             glassAction.ReplaceGlass();
             timer.AddTime();
@@ -37,7 +41,7 @@ public class PlayerActions : MonoBehaviour
 
     public void Throw()
     {
-        if(glassAction.glassesQueue.Peek().Throw())
+        if(glassAction.currentGlass.Throw())
         {
             glassAction.ReplaceGlass();
             timer.AddTime();
@@ -64,7 +68,7 @@ public class PlayerActions : MonoBehaviour
     IEnumerator SetAnim(Animator name,string param,bool val)
     {
         name.SetBool(param,val);
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(1f);
         name.SetBool(param,!val);
         gameManager.GameOver();
     }

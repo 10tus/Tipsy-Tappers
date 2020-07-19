@@ -4,19 +4,12 @@ using UnityEngine.SceneManagement;
 public class SceneManagerScript : MonoBehaviour
 {
     // Start is called before the first frame update
-    public static SceneManagerScript instance;
-    private void Awake() {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else 
-        {
-            Destroy(gameObject);
-            return;
-        }
+    void Awake()
+    {
         DontDestroyOnLoad(gameObject);
+        ServiceLocator.Register<SceneManagerScript>(this);
     }
+    
     public void GameScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);

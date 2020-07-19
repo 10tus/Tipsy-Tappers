@@ -2,7 +2,6 @@ using UnityEngine;
 
 [System.Serializable]
 public abstract class Glass {
-    public GameObject glassObject;
     public int glassValue;
 
     public Glass(int value){
