@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class playerActions : MonoBehaviour
+public class PlayerActions : MonoBehaviour
 {
 
     public Animator manAnim, dionAnim;
@@ -17,7 +17,7 @@ public class playerActions : MonoBehaviour
 
     void Awake()
     {
-        ServiceLocator.Register<playerActions>(this);
+        ServiceLocator.Register<PlayerActions>(this);
     }
 
     private void Start() 
@@ -84,7 +84,7 @@ public class playerActions : MonoBehaviour
     }*/
     void playDeadAnim(int type)
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<playerTap>().enabled = false;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerTap>().enabled = false;
         if(type == 1) //death by flying
         {
             StartCoroutine(SetAnim(manAnim,"dead", true));

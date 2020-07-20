@@ -52,14 +52,14 @@ public class GlassAction : MonoBehaviour
             activePoisons.TryDequeue(out _poison);
 
             //Hide poison offscreen and disable, then store to poison pool
-            _poison.FixPosition();
+            FixPosition(_poison);
             _poison.SetActive(false);
             poisonPool.Enqueue(_poison);
         };
 
         AddGlass();
         UpdateGlass();
-        Helper.DebugGlass();
+        //Helper.DebugGlass();
         // Helper.DebugPoisonInstances();
     }
 
@@ -89,7 +89,7 @@ public class GlassAction : MonoBehaviour
                 //activate poison instance
                 _poison.SetActive(true);
                 //set poison gameobject parent
-                _poison.FixPosition(glassObjects[i]);
+                FixPosition(_poison, glassObjects[i]);
                 //add poison to updated poison queue
                 _poisonQueue.Enqueue(_poison);
             }
@@ -99,17 +99,10 @@ public class GlassAction : MonoBehaviour
         activePoisons = new ConcurrentQueue<GameObject>(_poisonQueue);
     }
 
-    
-}
-
-internal static class Helper{
-    static GlassAction context = ServiceLocator.Resolve<GlassAction>();
-
-    internal static void FixPosition(this GameObject poison, GameObject parent = null){
-        
+    void FixPosition(GameObject poison, GameObject parent = null){
         //If parent is null, set parent to last glassObject element offscreen to hide poison
         if(parent is null){
-            parent = context.glassObjects.Last();
+            parent = glassObjects.Last();
         }
 
         //Set poison Parent and Position
@@ -120,19 +113,6 @@ internal static class Helper{
         poison.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
     }
 
-    // Add internal modifier to glassesQueue, poisonPool, and/or activePoisons if you want to use this method
-     internal static void DebugGlass(){
-         string debug = "";
-         foreach((Glass glass, int i) in context.glassesQueue.Select((value, i) => (value, i))){
-             debug += $"[{i}]{glass}-{glass.glassValue} ";
-         }
-         Debug.Log(debug);
-     }
-
     
-    // internal static void DebugPoisonInstances(){
-    //     Debug.Log($"Poison pool count: {context.poisonPool.Count}");
-    //     Debug.Log($"Active poison count: {context.activePoisons.Count}");
-    //     Debug.Log($"Total poison instances count: {context.poisonPool.Count + context.activePoisons.Count}");
-    // }
 }
+

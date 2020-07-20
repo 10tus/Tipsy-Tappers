@@ -7,7 +7,7 @@ public class GameOverHandler : MonoBehaviour
     public GameObject overPanel,score,timer,glassArray,DrunkMeter,instruction,revivePanel;
     public bool revivedOnce;
     private AdsController ads;
-    playerActions player;
+    PlayerActions player;
 
     private void Awake() {
         ServiceLocator.Register<GameOverHandler>(this);
@@ -15,7 +15,7 @@ public class GameOverHandler : MonoBehaviour
     }
     private void Start() {
         ads = ServiceLocator.Resolve<AdsController>();
-        player = ServiceLocator.Resolve<playerActions>();
+        player = ServiceLocator.Resolve<PlayerActions>();
     }
     public void GameOverPanel()
     {
@@ -30,7 +30,7 @@ public class GameOverHandler : MonoBehaviour
 
     void TogglePlayerTap(bool val)
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<playerTap>().enabled = val;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerTap>().enabled = val;
     }
 
     public void ShowRevivePanel()

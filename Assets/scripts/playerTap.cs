@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class playerTap : MonoBehaviour
+public class PlayerTap : MonoBehaviour
 {
     private Timer timer;
     private GameOverHandler overHandler;
-    playerActions player;
+    PlayerActions player;
     //private PlayerSystem playerSystem;
     private bool flag;
     Animator armAnim;
@@ -14,7 +14,7 @@ public class playerTap : MonoBehaviour
     {   
         overHandler = ServiceLocator.Resolve<GameOverHandler>();
         timer = ServiceLocator.Resolve<Timer>();
-        player = ServiceLocator.Resolve<playerActions>();
+        player = ServiceLocator.Resolve<PlayerActions>();
 
         if(GameObject.FindGameObjectWithTag("arm") != null)
         {
