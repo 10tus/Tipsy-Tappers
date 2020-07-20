@@ -6,7 +6,15 @@ public class SoundManagerScript : MonoBehaviour
 {
     public new Audio[] audio;
 
+<<<<<<< HEAD
     void Awake(){
+=======
+    
+
+    private void Awake()
+    {
+        ServiceLocator.Register<SoundManagerScript>(this);
+>>>>>>> develop
         DontDestroyOnLoad(gameObject);
         ServiceLocator.Register<SoundManagerScript>(this);
     }

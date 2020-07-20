@@ -6,24 +6,41 @@ public class GameManagerScript : MonoBehaviour
     // Start is called before the first frame update
     Camera cam;
     public Gradient gradient;
-    private GameOverHandler menu;
+    private GameOverHandler overHandler;
     private bool over = false;
     private float duration = 5f;
+    //[SerializeField]
+    //private int ctr = 0;
+    //private PlayerSystem playerSystem;
+    private AdsController _ads;
 
+<<<<<<< HEAD
     void Awake(){
+=======
+    private void Awake() {
+>>>>>>> develop
         ServiceLocator.Register<GameManagerScript>(this);
     }
 
     void Start()
     {
+        _ads = ServiceLocator.Resolve<AdsController>();
+        //playerSystem = PlayerSystem.instance;
         if(GameObject.FindGameObjectWithTag("MainCamera") != null)
         {
             cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         }
+<<<<<<< HEAD
         menu = ServiceLocator.Resolve<GameOverHandler>();
+=======
+        overHandler = ServiceLocator.Resolve<GameOverHandler>();
+>>>>>>> develop
 
 
     }
+
+    
+
 
     // Update is called once per frame
     void Update()
@@ -38,9 +55,17 @@ public class GameManagerScript : MonoBehaviour
 
     public void GameOver()
     {
-        over = true;
-        menu.GameOverPanel();
+        
+        over = true; 
+        overHandler.GameOverPanel();
+        
+        
 
+    }
+
+    public void ShowRevive()
+    {
+        overHandler.ShowRevivePanel();
     }
 
     private void ChangeColorBg()

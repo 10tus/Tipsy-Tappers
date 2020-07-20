@@ -6,6 +6,11 @@ public class DrunkHandler : MonoBehaviour
 {
     public GameObject cover;
     public Animator manAnim;
+<<<<<<< HEAD
+=======
+
+    [SerializeField]
+>>>>>>> develop
     private int _drunkLimit = 15;
     private int drunkLevel = 0;
 
@@ -25,7 +30,10 @@ public class DrunkHandler : MonoBehaviour
     IEnumerator Drunk()
     {
         Animator clouds = cover.GetComponent<Animator>();
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
         manAnim.SetBool("Drunk", true);
         clouds.SetBool("doCover", true);
         yield return new WaitForSeconds(3f);
