@@ -601,106 +601,8 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 6589263526968548894, guid: b03e8434c4b81cf44870ab383858bc59,
         type: 3}
-<<<<<<< HEAD
-      propertyPath: glassObjects.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6589263526968548894, guid: b03e8434c4b81cf44870ab383858bc59,
-        type: 3}
-      propertyPath: _drinks.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6589263526968548894, guid: b03e8434c4b81cf44870ab383858bc59,
-        type: 3}
-      propertyPath: _regularDrinks.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6589263526968548894, guid: b03e8434c4b81cf44870ab383858bc59,
-        type: 3}
-      propertyPath: model.Array.data[0]
-      value: 
-      objectReference: {fileID: 853986371}
-    - target: {fileID: 6589263526968548894, guid: b03e8434c4b81cf44870ab383858bc59,
-        type: 3}
-      propertyPath: glassObjects.Array.data[0]
-      value: 
-      objectReference: {fileID: 853986371}
-    - target: {fileID: 6589263526968548894, guid: b03e8434c4b81cf44870ab383858bc59,
-        type: 3}
-      propertyPath: glassObjects.Array.data[1]
-      value: 
-      objectReference: {fileID: 1760866864}
-    - target: {fileID: 6589263526968548894, guid: b03e8434c4b81cf44870ab383858bc59,
-        type: 3}
-      propertyPath: glassObjects.Array.data[2]
-      value: 
-      objectReference: {fileID: 1401205803}
-    - target: {fileID: 6589263526968548894, guid: b03e8434c4b81cf44870ab383858bc59,
-        type: 3}
-      propertyPath: glassObjects.Array.data[3]
-      value: 
-      objectReference: {fileID: 961002544}
-    - target: {fileID: 6589263526968548894, guid: b03e8434c4b81cf44870ab383858bc59,
-        type: 3}
-      propertyPath: glassObjects.Array.data[4]
-      value: 
-      objectReference: {fileID: 650772652}
-    - target: {fileID: 6589263526968548894, guid: b03e8434c4b81cf44870ab383858bc59,
-        type: 3}
-      propertyPath: _drinks.Array.data[0]
-      value: 
-      objectReference: {fileID: 21300000, guid: 9a28d7082bef05945a592e6bcc443da3,
-        type: 3}
-    - target: {fileID: 6589263526968548894, guid: b03e8434c4b81cf44870ab383858bc59,
-        type: 3}
-      propertyPath: _drinks.Array.data[1]
-      value: 
-      objectReference: {fileID: 21300000, guid: c9b59cfa904852a41b5f5e9345495c07,
-        type: 3}
-    - target: {fileID: 6589263526968548894, guid: b03e8434c4b81cf44870ab383858bc59,
-        type: 3}
-      propertyPath: _drinks.Array.data[2]
-      value: 
-      objectReference: {fileID: 21300000, guid: fb590c7ffe922ac4bbe30a1bdf2237de,
-        type: 3}
-    - target: {fileID: 6589263526968548894, guid: b03e8434c4b81cf44870ab383858bc59,
-        type: 3}
-      propertyPath: _drinks.Array.data[3]
-      value: 
-      objectReference: {fileID: 21300000, guid: dae104839d053154c900e84436c258e2,
-        type: 3}
-    - target: {fileID: 6589263526968548894, guid: b03e8434c4b81cf44870ab383858bc59,
-        type: 3}
-      propertyPath: poisonCloud
-      value: 
-      objectReference: {fileID: 7692081957063937243, guid: 7cac8622eb9d1b74e8c11b04faf20181,
-        type: 3}
-    - target: {fileID: 6589263526968548894, guid: b03e8434c4b81cf44870ab383858bc59,
-        type: 3}
-      propertyPath: _deathDrink
-      value: 
-      objectReference: {fileID: 21300000, guid: 9a28d7082bef05945a592e6bcc443da3,
-        type: 3}
-    - target: {fileID: 6589263526968548894, guid: b03e8434c4b81cf44870ab383858bc59,
-        type: 3}
-      propertyPath: _regularDrinks.Array.data[0]
-      value: 
-      objectReference: {fileID: 21300000, guid: c9b59cfa904852a41b5f5e9345495c07,
-        type: 3}
-    - target: {fileID: 6589263526968548894, guid: b03e8434c4b81cf44870ab383858bc59,
-        type: 3}
-      propertyPath: _regularDrinks.Array.data[1]
-      value: 
-      objectReference: {fileID: 21300000, guid: fb590c7ffe922ac4bbe30a1bdf2237de,
-        type: 3}
-    - target: {fileID: 6589263526968548894, guid: b03e8434c4b81cf44870ab383858bc59,
-        type: 3}
       propertyPath: _regularDrinks.Array.data[2]
       value: 
-=======
-      propertyPath: _regularDrinks.Array.data[2]
-      value: 
->>>>>>> develop
       objectReference: {fileID: 21300000, guid: dae104839d053154c900e84436c258e2,
         type: 3}
     - target: {fileID: 6589263526968548895, guid: b03e8434c4b81cf44870ab383858bc59,
@@ -772,17 +674,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1449682353}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
---- !u!1 &650772652 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6589263527006357197, guid: b03e8434c4b81cf44870ab383858bc59,
-    type: 3}
-  m_PrefabInstance: {fileID: 415927867}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &728191415
-=======
 --- !u!1 &722029475
->>>>>>> develop
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1021,27 +913,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &775216426 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 229409415679393449, guid: 20e59b35b6ab0014389f52da8415f226,
-    type: 3}
-  m_PrefabInstance: {fileID: 1749677101}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &775216427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 775216426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56eb021c59b99cd4fb29edd1e08c6693, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cover: {fileID: 853986370}
-  manAnim: {fileID: 8212214727927166247}
-  drunkBar: {fileID: 1544959709}
 --- !u!1001 &853986369
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1264,16 +1135,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 942959301}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
---- !u!1 &961002544 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6589263527410053999, guid: b03e8434c4b81cf44870ab383858bc59,
-    type: 3}
-  m_PrefabInstance: {fileID: 415927867}
-  m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
---- !u!114 &961002547
-=======
 --- !u!1 &993000909
 GameObject:
   m_ObjectHideFlags: 0
@@ -1292,20 +1153,11 @@ GameObject:
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!114 &993000910
->>>>>>> develop
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
-  m_GameObject: {fileID: 961002544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcb571169eff27e43adb37bf6ba3e951, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-=======
   m_GameObject: {fileID: 993000909}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -1326,9 +1178,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
->>>>>>> develop
-=======
->>>>>>> c0de50df983a6979d1c5c7d04769e942f4824a64
 --- !u!1 &1169590024
 GameObject:
   m_ObjectHideFlags: 0
@@ -1773,12 +1622,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 871291299011563146, guid: 7b5d84f5d69fd8d468da59dba92566e6,
     type: 3}
   m_PrefabInstance: {fileID: 1348755141}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1401205803 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6589263528195757251, guid: b03e8434c4b81cf44870ab383858bc59,
-    type: 3}
-  m_PrefabInstance: {fileID: 415927867}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1449682353
 PrefabInstance:
@@ -2563,16 +2406,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20e59b35b6ab0014389f52da8415f226, type: 3}
-<<<<<<< HEAD
---- !u!1 &1760866864 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6589263528180982935, guid: b03e8434c4b81cf44870ab383858bc59,
-    type: 3}
-  m_PrefabInstance: {fileID: 415927867}
-  m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
---- !u!114 &1760866867
-=======
 --- !u!1 &1806634363
 GameObject:
   m_ObjectHideFlags: 0
@@ -2694,20 +2527,11 @@ CanvasRenderer:
   m_GameObject: {fileID: 1806634363}
   m_CullTransparentMesh: 0
 --- !u!114 &1806634368
->>>>>>> develop
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
-  m_GameObject: {fileID: 1760866864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcb571169eff27e43adb37bf6ba3e951, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-=======
   m_GameObject: {fileID: 1806634363}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -2730,9 +2554,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
->>>>>>> develop
-=======
->>>>>>> c0de50df983a6979d1c5c7d04769e942f4824a64
 --- !u!1001 &1861181684
 PrefabInstance:
   m_ObjectHideFlags: 0

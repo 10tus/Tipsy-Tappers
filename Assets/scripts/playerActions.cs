@@ -1,28 +1,34 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerActions : MonoBehaviour
 {
+
     public Animator manAnim, dionAnim;
+    public bool flagTap;
 
     DrunkHandler drunkHandler;
     GameManagerScript gameManager;
     ScoresHandler scoresHandler;
     Timer timer;
     GlassAction glassAction;
+    GameOverHandler _over;
 
-    void Awake(){
+    void Awake()
+    {
         ServiceLocator.Register<PlayerActions>(this);
     }
 
-    void Start() 
+    private void Start() 
     {
+        //playerSystem = PlayerSystem.instance;
         gameManager = ServiceLocator.Resolve<GameManagerScript>();
         scoresHandler = ServiceLocator.Resolve<ScoresHandler>();
         timer = ServiceLocator.Resolve<Timer>();
-
         glassAction = ServiceLocator.Resolve<GlassAction>();
         drunkHandler = ServiceLocator.Resolve<DrunkHandler>();
+        _over = ServiceLocator.Resolve<GameOverHandler>();
     }
 
     public void Drink()
@@ -51,25 +57,62 @@ public class PlayerActions : MonoBehaviour
             playDeadAnim(0);
     }
 
+    /*
+    private void UpdateValue()
+    {
+
+        drunkBar.value = ctr;
+        if(ctr == DrunkLimit)
+            StartCoroutine(drunkHandler.Drunk());
+
+
+    }
+
+    
+    
+    IEnumerator Drunk()
+    {
+        Animator clouds = cover.GetComponent<Animator>();
+
+        manAnim.SetBool("Drunk", true);
+        clouds.SetBool("doCover", true);
+        yield return new WaitForSeconds(3f);
+        ctr = 0;
+        manAnim.SetBool("Drunk", false);
+        clouds.SetBool("doCover", false);
+
+    }*/
     void playDeadAnim(int type)
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<playerTap>().enabled = false;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerTap>().enabled = false;
         if(type == 1) //death by flying
         {
             StartCoroutine(SetAnim(manAnim,"dead", true));
+            
         }
         else //death by electrocution
         {
+            
             StartCoroutine(SetAnim(dionAnim,"dionShow",true));
         }
+        
         //manAnim.SetBool("dead", false);
-    }
 
+    }
     IEnumerator SetAnim(Animator name,string param,bool val)
     {
         name.SetBool(param,val);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2.5f);
         name.SetBool(param,!val);
-        gameManager.GameOver();
+
+        if(_over.revivedOnce)
+            gameManager.GameOver();     
+        else
+            gameManager.ShowRevive(); 
+            
     }
+
+    
+
+    
 }

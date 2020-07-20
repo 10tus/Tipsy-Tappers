@@ -3,26 +3,12 @@ using UnityEngine.UI;
 public class Timer : ReduceTimer
 {
     [SerializeField]
-    Slider slider;
+    private Slider slider;
 
     [SerializeField]
-    float rateAdd = 0.1f;
+    private float rateAdd = 0.1f;
 
     [SerializeField]
-<<<<<<< HEAD
-    int DivisibleBy;
-
-    float rateOfDecrease = 0.2f, addTime= .1f;
-
-    GameManagerScript gameManager;
-
-    void Awake() {
-        ServiceLocator.Register<Timer>(this);
-    }
-
-    void Start(){
-        gameManager = ServiceLocator.Resolve<GameManagerScript>();
-=======
     private int DivisibleBy;
     GameOverHandler _over;
 
@@ -40,17 +26,11 @@ public class Timer : ReduceTimer
         gameManager = ServiceLocator.Resolve<GameManagerScript>();
         _over = ServiceLocator.Resolve<GameOverHandler>();
         //playerSystem = PlayerSystem.instance;
->>>>>>> develop
     }
-
     public void StartTimer()
     {
-<<<<<<< HEAD
-        slider.value -= rateOfDecrease*Time.deltaTime;
-=======
         timeLeft -= reduceRate * Time.deltaTime;
         slider.value = timeLeft;
->>>>>>> develop
         TimerEnd();
     }
 
@@ -72,14 +52,12 @@ public class Timer : ReduceTimer
         {
             if(score != 0 && score % DivisibleBy == 0)
             {
-<<<<<<< HEAD
-                rateOfDecrease += rateAdd;
-=======
                 
                 reduceRate += rateAdd;
->>>>>>> develop
             }
+            
         }
+
     }
 
     public override void TimerEnd()

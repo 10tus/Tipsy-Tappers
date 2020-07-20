@@ -4,31 +4,25 @@ using UnityEngine;
 
 public class SoundManagerScript : MonoBehaviour
 {
-    public new Audio[] audio;
+    public Audio[] audio;
 
-<<<<<<< HEAD
-    void Awake(){
-=======
     
 
     private void Awake()
     {
         ServiceLocator.Register<SoundManagerScript>(this);
->>>>>>> develop
         DontDestroyOnLoad(gameObject);
-        ServiceLocator.Register<SoundManagerScript>(this);
-    }
-
-    void Start(){
         foreach (Audio a in audio)
         {
             a.source = gameObject.AddComponent<AudioSource>();
             a.source.clip = a.clip;
             a.source.volume = a.volume;
             a.source.pitch = a.pitch;
-            a.source.loop = a.loop;
+            a.source.loop=a.loop;
         }
     }
+
+   
 
     public void Play(string name)
     {

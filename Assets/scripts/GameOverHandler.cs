@@ -9,14 +9,6 @@ public class GameOverHandler : MonoBehaviour
     private AdsController ads;
     PlayerActions player;
 
-<<<<<<< HEAD
-    void Awake(){
-        ServiceLocator.Register<GameOverHandler>(this);
-    }
-
-    public void GameOverPanel()
-    {
-=======
     private void Awake() {
         ServiceLocator.Register<GameOverHandler>(this);
         
@@ -29,7 +21,6 @@ public class GameOverHandler : MonoBehaviour
     {
         TogglePlayerTap(false);
         revivePanel.SetActive(false);
->>>>>>> develop
         overPanel.SetActive(true);
         score.SetActive(false);
         timer.SetActive(false);
@@ -47,8 +38,6 @@ public class GameOverHandler : MonoBehaviour
         TogglePlayerTap(false);
         revivePanel.SetActive(true);
         DrunkMeter.SetActive(false);
-<<<<<<< HEAD
-=======
         timer.SetActive(false);
         player.flagTap = false;
 
@@ -65,9 +54,7 @@ public class GameOverHandler : MonoBehaviour
         DrunkMeter.SetActive(true);
         TogglePlayerTap(true);
         //Play Ad or pay 30 tipsy coins
->>>>>>> develop
     }
-
     public void HideGameOverPanel()
     {
         overPanel.SetActive(false);
@@ -75,7 +62,6 @@ public class GameOverHandler : MonoBehaviour
         StartCoroutine(tapStart());
         
     }
-
     private IEnumerator tapStart()
     {
         ads.CheckPremiumUser();
@@ -85,14 +71,10 @@ public class GameOverHandler : MonoBehaviour
             ads.ShowAdsEveryFiveGames();
         }      
         glassArray.SetActive(false); 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-<<<<<<< HEAD
-        GameObject.FindGameObjectWithTag("Player").GetComponent<playerTap>().enabled = true;
-=======
         TogglePlayerTap(true);
 
->>>>>>> develop
     }
 
     

@@ -14,11 +14,7 @@ public class GameManagerScript : MonoBehaviour
     //private PlayerSystem playerSystem;
     private AdsController _ads;
 
-<<<<<<< HEAD
-    void Awake(){
-=======
     private void Awake() {
->>>>>>> develop
         ServiceLocator.Register<GameManagerScript>(this);
     }
 
@@ -30,11 +26,7 @@ public class GameManagerScript : MonoBehaviour
         {
             cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         }
-<<<<<<< HEAD
-        menu = ServiceLocator.Resolve<GameOverHandler>();
-=======
         overHandler = ServiceLocator.Resolve<GameOverHandler>();
->>>>>>> develop
 
 
     }
@@ -55,7 +47,6 @@ public class GameManagerScript : MonoBehaviour
 
     public void GameOver()
     {
-<<<<<<< HEAD
         
         over = true; 
         overHandler.GameOverPanel();
@@ -67,11 +58,6 @@ public class GameManagerScript : MonoBehaviour
     public void ShowRevive()
     {
         overHandler.ShowRevivePanel();
-=======
-        over = true;
-        GameObject.FindGameObjectWithTag("Player").GetComponent<playerTap>().enabled = false;
-        menu.GameOverPanel();
->>>>>>> c0de50df983a6979d1c5c7d04769e942f4824a64
     }
 
     private void ChangeColorBg()

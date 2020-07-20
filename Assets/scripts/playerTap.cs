@@ -3,17 +3,6 @@ using System.Collections;
 
 public class PlayerTap : MonoBehaviour
 {
-<<<<<<< HEAD
-    private bool flag;
-    Animator armAnim;
-
-    Timer timer;
-    PlayerActions player;
-    GameOverHandler menu;
-
-    void Start() {
-        menu = ServiceLocator.Resolve<GameOverHandler>();
-=======
     private Timer timer;
     private GameOverHandler overHandler;
     PlayerActions player;
@@ -27,31 +16,24 @@ public class PlayerTap : MonoBehaviour
         timer = ServiceLocator.Resolve<Timer>();
         player = ServiceLocator.Resolve<PlayerActions>();
 
->>>>>>> develop
         if(GameObject.FindGameObjectWithTag("arm") != null)
         {
             armAnim = GameObject.FindGameObjectWithTag("arm").GetComponent<Animator>();
         }
-<<<<<<< HEAD
-        player = ServiceLocator.Resolve<PlayerActions>();
-        timer = ServiceLocator.Resolve<Timer>();
-=======
         //glass = GlassAction.instance;
         
 
->>>>>>> develop
     }
 
     void Update()
     {
+        
         TouchAction();
-<<<<<<< HEAD
-        if(flag)
-=======
         if(player.flagTap)
         {
->>>>>>> develop
             timer.StartTimer();
+        }
+        
     }
 
     private void TouchAction()
@@ -65,21 +47,16 @@ public class PlayerTap : MonoBehaviour
             {
                 DoAction(tch.x,tch.y); //get y-position of screen so player only taps at bottom side
                 //print("Loc" + tch.x);
+
+
             } 
+
         }         
     }
 
     private void DoAction(float posX,float posY)
     {
         //player taps at right side
-<<<<<<< HEAD
-        if(posX > 0 && posY < -1.5f)
-        {
-            menu.instruction.SetActive(false);
-            player.Drink();
-            StartCoroutine(ToggleAnim(armAnim,"Drink",true,0.01f));
-            flag = true;    
-=======
 
         if(posX > 0 && posY < -1.5f )
         {
@@ -87,22 +64,14 @@ public class PlayerTap : MonoBehaviour
             player.Drink();
             StartCoroutine(ToggleAnim(armAnim,"Drink",true,0.01f));
             player.flagTap = true;    
->>>>>>> develop
         }
         //player taps at left side
         else if (posX<0 && posY < -1.5f )
         {
-<<<<<<< HEAD
-            menu.instruction.SetActive(false);
-            player.Throw();
-            StartCoroutine(ToggleAnim(armAnim,"Throw",true,0.01f));
-            flag = true;
-=======
             overHandler.instruction.SetActive(false);
             player.Throw();
             StartCoroutine(ToggleAnim(armAnim,"Throw",true,0.01f));
             player.flagTap = true;  
->>>>>>> develop
         }
 
     }
