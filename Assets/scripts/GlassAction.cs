@@ -62,10 +62,14 @@ public class GlassAction : MonoBehaviour
 
             //Hide poison offscreen and disable, then store to poison pool
 <<<<<<< HEAD
+<<<<<<< HEAD
             _poison.FixPosition();
 =======
             FixPosition(_poison);
 >>>>>>> develop
+=======
+            FixPosition(_poison);
+>>>>>>> c0de50df983a6979d1c5c7d04769e942f4824a64
             _poison.SetActive(false);
             poisonPool.Enqueue(_poison);
         };
@@ -101,20 +105,28 @@ public class GlassAction : MonoBehaviour
                 else if (poisonPool.TryDequeue(out _poison)) { }
                 else if ((poisonPool.Count + activePoisons.Count) < 5)
 <<<<<<< HEAD
+<<<<<<< HEAD
                     _poison = Instantiate(poisonCloud, glassObjects[i].transform.position + new Vector3(0.1f, 0.3f, 0), Quaternion.identity) as GameObject;
 =======
                     _poison = Instantiate(poisonCloud) as GameObject;
 >>>>>>> develop
+=======
+                    _poison = Instantiate(poisonCloud) as GameObject;
+>>>>>>> c0de50df983a6979d1c5c7d04769e942f4824a64
 
 
                 //activate poison instance
                 _poison.SetActive(true);
                 //set poison gameobject parent
 <<<<<<< HEAD
+<<<<<<< HEAD
                 _poison.FixPosition(glassObjects[i]);
 =======
                 FixPosition(_poison, glassObjects[i]);
 >>>>>>> develop
+=======
+                FixPosition(_poison, glassObjects[i]);
+>>>>>>> c0de50df983a6979d1c5c7d04769e942f4824a64
                 //add poison to updated poison queue
                 _poisonQueue.Enqueue(_poison);
             }
@@ -124,6 +136,7 @@ public class GlassAction : MonoBehaviour
         activePoisons = new ConcurrentQueue<GameObject>(_poisonQueue);
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     
 }
@@ -141,6 +154,12 @@ internal static class Helper{
         if(parent is null){
             parent = glassObjects.Last();
 >>>>>>> develop
+=======
+    void FixPosition(GameObject poison, GameObject parent = null){
+        //If parent is null, set parent to last glassObject element offscreen to hide poison
+        if(parent is null){
+            parent = glassObjects.Last();
+>>>>>>> c0de50df983a6979d1c5c7d04769e942f4824a64
         }
 
         //Set poison Parent and Position
@@ -151,6 +170,7 @@ internal static class Helper{
         poison.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     // Add internal modifier to glassesQueue, poisonPool, and/or activePoisons if you want to use this method
     // internal static void DebugGlass(){
@@ -172,3 +192,26 @@ internal static class Helper{
 >>>>>>> develop
 }
 
+=======
+    
+}
+
+// internal static class Helper{
+//     Add internal modifier to glassesQueue, poisonPool, and/or activePoisons if you want to use this method
+//
+//     internal static void DebugGlass(){
+//         string debug = "";
+//         foreach((Glass glass, int i) in context.glassesQueue.Select((value, i) => (value, i))){
+//             debug += $"[{i}]{glass}-{glass.glassValue} ";
+//         }
+//         Debug.Log(debug);
+//     }
+
+    
+//     internal static void DebugPoisonInstances(){
+//         Debug.Log($"Poison pool count: {context.poisonPool.Count}");
+//         Debug.Log($"Active poison count: {context.activePoisons.Count}");
+//         Debug.Log($"Total poison instances count: {context.poisonPool.Count + context.activePoisons.Count}");
+//     }
+// }
+>>>>>>> c0de50df983a6979d1c5c7d04769e942f4824a64
