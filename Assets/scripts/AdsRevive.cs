@@ -1,21 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AdsRevive : Ads
 {
-    PlayerSystem playerSystem;
+    //PlayerSystem playerSystem;
+    GameOverHandler _over;
     GameObject revivePanel;
 
-    private void Awake() {
-        playerSystem = PlayerSystem.instance;
+    private void Awake() 
+    {
+        _over = ServiceLocator.Resolve<GameOverHandler>();
         revivePanel = gameObject; //dis is referencing to d gameobject attach to dis script
     }
 
     public override void Reward()
     {
         Debug.Log("hello from ads revive bitch");
-        playerSystem._over.ReviveAccepted();
+        _over.ReviveAccepted();
 
     }
 

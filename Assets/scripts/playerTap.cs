@@ -1,20 +1,20 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class playerTap : MonoBehaviour
 {
     private Timer timer;
-    private GlassAction glass;
     private GameOverHandler overHandler;
-    private PlayerSystem playerSystem;
+    playerActions player;
+    //private PlayerSystem playerSystem;
     private bool flag;
     Animator armAnim;
 
     private void Start() 
-    {
-        playerSystem = PlayerSystem.instance;
-        overHandler = playerSystem._over;
-        timer = playerSystem._timer;
-        glass = playerSystem._glass;
+    {   
+        overHandler = ServiceLocator.Resolve<GameOverHandler>();
+        timer = ServiceLocator.Resolve<Timer>();
+        player = ServiceLocator.Resolve<playerActions>();
 
         if(GameObject.FindGameObjectWithTag("arm") != null)
         {
@@ -29,7 +29,7 @@ public class playerTap : MonoBehaviour
     {
         
         TouchAction();
-        if(flag)
+        if(player.flagTap)
         {
             timer.StartTimer();
         }
@@ -58,23 +58,30 @@ public class playerTap : MonoBehaviour
     {
         //player taps at right side
 
-        if(posX > 0 && posY < -1.5f)
+        if(posX > 0 && posY < -1.5f )
         {
             overHandler.instruction.SetActive(false);
-            glass.RemoveGlass(0);
-            StartCoroutine(playerSystem.ToggleAnim(armAnim,"Drink",true,0.01f));
-            flag = true;          
+            player.Drink();
+            StartCoroutine(ToggleAnim(armAnim,"Drink",true,0.01f));
+            player.flagTap = true;    
         }
         //player taps at left side
-        else if (posX<0 && posY < -1.5f)
+        else if (posX<0 && posY < -1.5f )
         {
             overHandler.instruction.SetActive(false);
-            glass.RemoveGlass(1);
-            StartCoroutine(playerSystem.ToggleAnim(armAnim,"Throw",true,0.01f));
-            flag = true;
-            
+            player.Throw();
+            StartCoroutine(ToggleAnim(armAnim,"Throw",true,0.01f));
+            player.flagTap = true;  
         }
 
+    }
+
+    private IEnumerator ToggleAnim(Animator animator,string param,bool val,float seconds)
+    {
+        animator.SetBool(param,val);
+        yield return new WaitForSeconds(seconds);
+        animator.SetBool(param,!val);
+        
     }
 
    

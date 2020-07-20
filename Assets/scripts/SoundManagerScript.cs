@@ -6,20 +6,11 @@ public class SoundManagerScript : MonoBehaviour
 {
     public Audio[] audio;
 
-    public static SoundManagerScript instance;
+    
 
     private void Awake()
     {
-        //No SoundManager in Scene
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else //SoundManager is already in Scene then destroy it for only 1 SoundManager is allowed in scene
-        {
-            Destroy(gameObject);
-            return;
-        }
+        ServiceLocator.Register<SoundManagerScript>(this);
         DontDestroyOnLoad(gameObject);
         foreach (Audio a in audio)
         {

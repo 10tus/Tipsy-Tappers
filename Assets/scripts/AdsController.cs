@@ -61,21 +61,13 @@ public abstract class Ads:MonoBehaviour,IUnityAdsListener
 
 public class AdsController : Ads
 {
-    //temporary instance
-    public static AdsController instance;
+    
+    
 
      private void Awake() 
      {
-         CheckGamesCount();
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else 
-        {
-            Destroy(gameObject);
-            return;
-        }
+        CheckGamesCount();
+        ServiceLocator.Register<AdsController>(this);
     }
 
     public void AddToGamesCtr()
@@ -113,6 +105,16 @@ public class AdsController : Ads
         //PlayerPrefs.DeleteKey("Premium"); uncomment dis if u want to test
         PlayerPrefs.SetInt("Premium",1);
         Debug.Log("Player bought d game? :: " + PlayerPrefs.HasKey("Premium"));
+    }
+
+    public void CheckPremiumUser()
+    {
+        if(!PlayerPrefs.HasKey("Premium"))
+        {
+            Debug.Log(PlayerPrefs.GetInt("gCtr") + ":: Games Ctr");
+            ShowAdsEveryFiveGames();
+        }
+
     }
     public override void InitialSetup()
     {

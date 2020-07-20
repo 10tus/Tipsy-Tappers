@@ -5,11 +5,10 @@ using UnityEngine.UI;
 public class ReviveTimer : ReduceTimer
 {
     private GameManagerScript gameManager;
-    private float timeLeft;
 
     private void Start() {
-        timeLeft = GetComponent<Image>().fillAmount;
-        gameManager = GameManagerScript.instance;
+        timeLeft = 1f;
+        gameManager = ServiceLocator.Resolve<GameManagerScript>();
     }
     void Update()
     {

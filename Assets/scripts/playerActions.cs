@@ -5,62 +5,51 @@ using UnityEngine.UI;
 public class playerActions : MonoBehaviour
 {
 
-    private int ctr = 0,forbidVal = 1;
-    private Timer timer;
-    private GameManagerScript gameManager;
-    private ScoresHandler scoresHandler;
-    [SerializeField]
-    private Slider drunkBar;
-    private PlayerSystem playerSystem;
+    public Animator manAnim, dionAnim;
+    public bool flagTap;
 
-    [SerializeField] //SerializeField to make it visible in inspector in unity but not accessible by other class
-    private int DrunkLimit;
-    public Animator manAnim,dionAnim;
-    public GameObject cover;
+    DrunkHandler drunkHandler;
+    GameManagerScript gameManager;
+    ScoresHandler scoresHandler;
+    Timer timer;
+    GlassAction glassAction;
+    GameOverHandler _over;
 
+    void Awake()
+    {
+        ServiceLocator.Register<playerActions>(this);
+    }
 
     private void Start() 
     {
-        playerSystem = PlayerSystem.instance;
-        gameManager = GameManagerScript.instance;
-        scoresHandler = playerSystem._scoresHandler;
-        timer = playerSystem._timer;
+        //playerSystem = PlayerSystem.instance;
+        gameManager = ServiceLocator.Resolve<GameManagerScript>();
+        scoresHandler = ServiceLocator.Resolve<ScoresHandler>();
+        timer = ServiceLocator.Resolve<Timer>();
+        glassAction = ServiceLocator.Resolve<GlassAction>();
+        drunkHandler = ServiceLocator.Resolve<DrunkHandler>();
+        _over = ServiceLocator.Resolve<GameOverHandler>();
     }
 
-    private void Drink(int drinkVal)
+    public void Drink()
     {
-
-        if(drinkVal != forbidVal)
+        if(glassAction.currentGlass.Drink())
         {
+            glassAction.ReplaceGlass();
             timer.AddTime();
+            timer.rateOfDecreaseChange(scoresHandler.currScore);
             scoresHandler.UpdateScore();
-            ctr++;
-            UpdateValue();
-            
-
+            drunkHandler.IncrementDrunkLevel();
         }
         else       
             playDeadAnim(1);
-
     }
 
-    public void Consequences(int val, int type)
+    public void Throw()
     {
-        
-        if(type == 0)
+        if(glassAction.currentGlass.Throw())
         {
-            Drink(val);
-            timer.rateOfDecreaseChange(scoresHandler.currScore);
-
-        }
-        else if(type == 1)
-            Throw(val);
-    }
-
-    private void Throw(int throwVal)
-    {
-        if(throwVal == forbidVal)
-        {
+            glassAction.ReplaceGlass();
             timer.AddTime();
             scoresHandler.UpdateScore();
         }
@@ -68,18 +57,19 @@ public class playerActions : MonoBehaviour
             playDeadAnim(0);
     }
 
+    /*
     private void UpdateValue()
     {
 
         drunkBar.value = ctr;
         if(ctr == DrunkLimit)
-            StartCoroutine(Drunk());
+            StartCoroutine(drunkHandler.Drunk());
 
 
     }
 
     
-
+    
     IEnumerator Drunk()
     {
         Animator clouds = cover.GetComponent<Animator>();
@@ -91,7 +81,7 @@ public class playerActions : MonoBehaviour
         manAnim.SetBool("Drunk", false);
         clouds.SetBool("doCover", false);
 
-    }
+    }*/
     void playDeadAnim(int type)
     {
         GameObject.FindGameObjectWithTag("Player").GetComponent<playerTap>().enabled = false;
@@ -115,7 +105,7 @@ public class playerActions : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         name.SetBool(param,!val);
 
-        if(playerSystem._over.revivedOnce)
+        if(_over.revivedOnce)
             gameManager.GameOver();     
         else
             gameManager.ShowRevive(); 

@@ -10,27 +10,40 @@ public class Timer : ReduceTimer
 
     [SerializeField]
     private int DivisibleBy;
-    private PlayerSystem playerSystem;
+    GameOverHandler _over;
 
     private GameManagerScript gameManager;
     private float addTime = .1f;
+    
 
     // Update is called once per frame
+    private void Awake() {
+        ServiceLocator.Register<Timer>(this);
+    }
 
     private void Start() {
-        gameManager = GameManagerScript.instance;
-        playerSystem = PlayerSystem.instance;
+        timeLeft = .5f;
+        gameManager = ServiceLocator.Resolve<GameManagerScript>();
+        _over = ServiceLocator.Resolve<GameOverHandler>();
+        //playerSystem = PlayerSystem.instance;
     }
     public void StartTimer()
     {
-
-        slider.value -= reduceRate*Time.deltaTime;
+        timeLeft -= reduceRate * Time.deltaTime;
+        slider.value = timeLeft;
         TimerEnd();
+    }
+
+    public void ResetTimer()
+    {
+        this.timeLeft = 0.5f;
+        slider.value = timeLeft;
+
     }
 
     public void AddTime()
     {
-        slider.value += addTime;      
+        this.timeLeft += addTime;      
     }
 
     public void rateOfDecreaseChange(int score)
@@ -49,11 +62,11 @@ public class Timer : ReduceTimer
 
     public override void TimerEnd()
     {
-        if(slider.value <= 0 && !playerSystem._over.revivedOnce)
+        if(slider.value <= 0 && !_over.revivedOnce)
         {
             gameManager.ShowRevive();
         }
-        else if(slider.value<=0 && playerSystem._over.revivedOnce)
+        else if(slider.value<=0 && _over.revivedOnce)
             gameManager.GameOver();
     }
 }

@@ -9,40 +9,24 @@ public class GameManagerScript : MonoBehaviour
     private GameOverHandler overHandler;
     private bool over = false;
     private float duration = 5f;
-    [SerializeField]
-    private int ctr = 0;
-    private PlayerSystem playerSystem;
+    //[SerializeField]
+    //private int ctr = 0;
+    //private PlayerSystem playerSystem;
     private AdsController _ads;
 
+    private void Awake() {
+        ServiceLocator.Register<GameManagerScript>(this);
+    }
 
-
-
-    #region SingletonInstance
-    public static GameManagerScript instance;
-
-     private void Awake() 
-     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else 
-        {
-            Destroy(gameObject);
-            return;
-        }
-     }
-
-     #endregion
     void Start()
     {
-        _ads = AdsController.instance;
-        playerSystem = PlayerSystem.instance;
+        _ads = ServiceLocator.Resolve<AdsController>();
+        //playerSystem = PlayerSystem.instance;
         if(GameObject.FindGameObjectWithTag("MainCamera") != null)
         {
             cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         }
-        overHandler = playerSystem._over;
+        overHandler = ServiceLocator.Resolve<GameOverHandler>();
 
 
     }
@@ -66,7 +50,7 @@ public class GameManagerScript : MonoBehaviour
         
         over = true; 
         overHandler.GameOverPanel();
-        //if games count is 2 play no reward ads
+        
         
 
     }
