@@ -39,8 +39,8 @@ public class GameManagerScript : MonoBehaviour
     public void GameOver()
     {
         over = true;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<playerTap>().enabled = false;
         menu.GameOverPanel();
-
     }
 
     private void ChangeColorBg()
