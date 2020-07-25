@@ -6,16 +6,16 @@ public class SceneManagerScript : MonoBehaviour
     // Start is called before the first frame update
     
     private void Awake() {
+        ServiceLocator.Register<SceneManagerScript>(this);  
         
-        DontDestroyOnLoad(gameObject);
     }
     public void GameScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(1);
     }
 
     public void MenuScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 0);
+        SceneManager.LoadScene(0);
     }
 }

@@ -7,12 +7,15 @@ public class GameManagerScript : MonoBehaviour
     Camera cam;
     public Gradient gradient;
     private GameOverHandler overHandler;
+    SceneManagerScript scene;
     private bool over = false;
     private float duration = 5f;
     //[SerializeField]
     //private int ctr = 0;
     //private PlayerSystem playerSystem;
     private AdsController _ads;
+    Leaderboards leaderboards;
+    ScoresHandler scores;
 
     private void Awake() {
         ServiceLocator.Register<GameManagerScript>(this);
@@ -20,7 +23,10 @@ public class GameManagerScript : MonoBehaviour
 
     void Start()
     {
+        scores = ServiceLocator.Resolve<ScoresHandler>();
         _ads = ServiceLocator.Resolve<AdsController>();
+        scene = ServiceLocator.Resolve<SceneManagerScript>();
+        leaderboards = ServiceLocator.Resolve<Leaderboards>();
         //playerSystem = PlayerSystem.instance;
         if(GameObject.FindGameObjectWithTag("MainCamera") != null)
         {
@@ -47,6 +53,12 @@ public class GameManagerScript : MonoBehaviour
 
     public void GameOver()
     {
+        try //added catch method so dat game would not crash when game has no internet to connect playfab
+        {
+            if(!scores.GetHighScore())
+                leaderboards.SubmitScoreToPlayfab();
+        }
+        catch{}
         
         over = true; 
         overHandler.GameOverPanel();
@@ -55,11 +67,17 @@ public class GameManagerScript : MonoBehaviour
 
     }
 
+    public void ShowLeaderboard()
+    {
+        scene.MenuScene();
+    }
+
     public void ShowRevive()
     {
         overHandler.ShowRevivePanel();
     }
 
+    //relocate dis shit when doing store
     private void ChangeColorBg()
     {
         

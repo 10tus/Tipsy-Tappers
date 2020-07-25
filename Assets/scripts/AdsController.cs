@@ -102,8 +102,8 @@ public class AdsController : Ads
     }
     public void BuyGameAccepted()
     {
-        //PlayerPrefs.DeleteKey("Premium"); uncomment dis if u want to test
-        PlayerPrefs.SetInt("Premium",1);
+        //PlayerPrefs.DeleteKey("Premium");// uncomment dis if u want to test unskippable ads every 5 games
+        PlayerPrefs.SetInt("Premium",1); //comment dis shit to set game to premium
         Debug.Log("Player bought d game? :: " + PlayerPrefs.HasKey("Premium"));
     }
 

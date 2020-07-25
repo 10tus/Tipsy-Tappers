@@ -48,6 +48,10 @@ public class ScoresHandler : MonoBehaviour
         
         
     }
+    public bool GetHighScore()
+    {
+        return PlayerPrefs.GetInt("hi") > currScore;
+    }
     public void RestartScore()
     {
         currScore = 0;
